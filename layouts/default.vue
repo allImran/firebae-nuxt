@@ -113,9 +113,14 @@
   import { mapMutations } from 'vuex'
 export default {
   //middleware: 'authenticated',
+  name: 'default-layout',
   computed: {
+    
     loggedIn(){
       return this.$store.state.user == null ? false : true
+    },
+    snackbar(){
+      return this.$store.state.expence.snackbar;
     }
   },
   data () {
@@ -123,7 +128,6 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      snackbar: false,
       text: 'cvcv',
       items: [
         {

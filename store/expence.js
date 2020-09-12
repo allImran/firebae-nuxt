@@ -3,6 +3,7 @@ import 'firebase/database';
 export const state = () => ({
   expences: [],
   loading: false,
+  snackbar: false,
 })
 
 export const mutations = {
