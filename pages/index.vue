@@ -29,7 +29,7 @@
     data () {
     	return {
     		menuItems: [
-    			{name: 'User', icon: 'mdi-account', link: '#'},
+    			{name: 'User', icon: 'mdi-account', link: '/user'},
     			{name: 'Order', icon: 'mdi-cart-arrow-down', link: '#'},
     			{name: 'Expence', icon: 'mdi-currency-bdt', link: '/expence'}
     		]

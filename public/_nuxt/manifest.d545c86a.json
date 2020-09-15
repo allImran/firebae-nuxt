@@ -1,0 +1,54 @@
+{
+  "name": "firebase-nuxt",
+  "short_name": "firebase-nuxt",
+  "description": "## Build Setup",
+  "icons": [
+    {
+      "src": "/_nuxt/icons/icon_64x64.37762b.png",
+      "sizes": "64x64",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/_nuxt/icons/icon_120x120.37762b.png",
+      "sizes": "120x120",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/_nuxt/icons/icon_144x144.37762b.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/_nuxt/icons/icon_152x152.37762b.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/_nuxt/icons/icon_192x192.37762b.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/_nuxt/icons/icon_384x384.37762b.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/_nuxt/icons/icon_512x512.37762b.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/?standalone=true",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "black",
+  "lang": "en"
+}

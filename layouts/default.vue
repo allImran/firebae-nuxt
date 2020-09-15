@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app>
     <!-- <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -44,9 +44,9 @@
       </v-btn> -->
       <v-btn
         icon
-        @click.stop="fixed = !fixed"
+        @click.stop= "goBack"
       >
-        <v-icon>mdi-minus</v-icon>
+        <v-icon>mdi-keyboard-backspace</v-icon>
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
@@ -88,29 +88,13 @@
     >
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
-    <v-snackbar
-        v-model="snackbar"
-      >
-        {{ text }}
-
-        <template v-slot:action="{ attrs }">
-          <v-btn
-            color="pink"
-            text
-            v-bind="attrs"
-            @click="snackbar = false"
-          >
-            Close
-          </v-btn>
-        </template>
-      </v-snackbar>
   </v-app>
 </template>
 
 <script>
   import * as firebase from 'firebase/app'
   import 'firebase/auth'
-  import { mapMutations } from 'vuex'
+  import { mapMutations, mapState } from 'vuex'
 export default {
   //middleware: 'authenticated',
   name: 'default-layout',
@@ -119,16 +103,15 @@ export default {
     loggedIn(){
       return this.$store.state.user == null ? false : true
     },
-    snackbar(){
-      return this.$store.state.expence.snackbar;
-    }
+    ...mapState({
+    }),
+   
   },
   data () {
     return {
       clipped: false,
       drawer: false,
       fixed: false,
-      text: 'cvcv',
       items: [
         {
           icon: 'mdi-apps',
@@ -155,6 +138,9 @@ export default {
       firebase.auth().signOut();
       this.setUser(null)
       this.$router.push('/login')
+    },
+    goBack(){
+      this.$router.back();
     }
   }
 }

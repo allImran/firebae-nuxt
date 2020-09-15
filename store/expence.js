@@ -2,38 +2,47 @@ import * as firebase from 'firebase/app';
 import 'firebase/database';
 export const state = () => ({
   expences: [],
-  loading: false,
-  snackbar: false,
+  loading: false
 })
 
 export const mutations = {
   SET_EXPENCE(state, data) {
-    state.expences = data;
+    state.expences = data.reverse();
   },
   SET_LOADING(state, data) {
-    state.loading = data
-  }
+    state.loading = data;
+  },
+
 }
 
 export const actions = {
-	 ACT_STORE({commit}, payload) {
-    let date = new Date();
-    payload.time = date.toLocaleDateString();
-	 	firebase.database().ref('expences').push(payload)
-	 	.then((data) => {
-	 		console.log(data);
-	 		//commit('SET_EXPENCE', payload)
-	 	})
-	 	.catch((error)=> {
-    		console.log(error)
-    	})
-    },
 
-    ACT_EXPENCE({commit}){
+	async ACT_STORE({commit}, payload) {
+
+    return new Promise((resolve, reject) => {
+      let date = new Date();
+      payload.time = date.toLocaleDateString();
+  	 	firebase.database().ref('expences').push(payload)
+  	 	.then((data) => {
+  	 		console.log(data);
+        resolve({
+          success: true
+        });
+  	 	})
+  	 	.catch((error)=> {
+    		console.log(error)
+        resolve({
+          success: false
+        });
+    	})
+    });
+  },
+
+    async ACT_EXPENCE({commit}){
       commit('SET_LOADING', true)
-      let modifiedData = [];
+      return new Promise((resolve, reject) => {
       firebase.database().ref('expences').on('value',(data)=>{
-        //console.log(snap.val());
+      let modifiedData = [];
         let rawData = data.val();
         if(rawData !== null ){
           console.log(rawData, 'rawdata')
@@ -43,17 +52,51 @@ export const actions = {
               id: key,
               title: rawData[key].title,
               expence: rawData[key].expence,
-              detail: rawData[key].description,
-              date: rawData[key].time,
+              description: rawData[key].description,
+              time: rawData[key].time,
             })
           });
           commit('SET_EXPENCE', modifiedData)
           commit('SET_LOADING', false)
+          resolve({
+            success: true
+          });
+        }else{
+          commit('SET_LOADING', false);
         }
       }, (err) => {
-        console.log(err)
+        commit('SET_LOADING', false)
+        resolve({
+          error: err,
+          success: false
+        });
       });
-      console.log('dispatch end')
+      });
+    },
+
+
+    async ACT_UPDATE({commit}, payload) {
+
+    return new Promise((resolve, reject) => {
       
-    }
+      //firebase.database().ref('expences').push(payload)
+      firebase.database().ref('expences').child(payload.id).update(payload)
+      .then((data) => {
+        console.log(data);
+        resolve({
+          success: true
+        });
+      })
+      .catch((error)=> {
+        console.log(error)
+        resolve({
+          success: false
+        });
+      })
+    });
+  },
+
+
+
+
 }

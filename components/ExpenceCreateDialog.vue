@@ -14,6 +14,7 @@
 			          ></v-text-field>
 			          <v-text-field
 			          	v-model="expence.expence"
+			          	type="number"
 			            label="Amount"
 			            dense
 			            outlined
@@ -40,9 +41,7 @@
 			    </v-form>
 	      </v-card>
 	    <Snackbar 
-	    	:text="text"
-	    	:snackbar="snackbar"
-	    	
+			ref="snackbar"	    	
 	    />
 	</div>
 </template>
@@ -57,27 +56,26 @@
 				snackbar: false,
 				loading: false,
 				expence: {
-    			title: '',
-    			expence: '',
-    			description: '',
-    		  },
+    				title: '',
+    				expence: '',
+    				description: '',
+    		  	},
 			}
 		}, //end of data
 		methods: {
 			store(){
-				if(this.expence.title.trim() == ''){this.snackAlert('Write a title')}
-				console.log('store')
+				if(this.expence.title.trim() == ''){this.$refs.snackbar.showNotification('Write a title first.'); return;}
+				if(!Number.isInteger(parseInt(this.expence.expence)) || parseInt(this.expence.expence) < 1){this.$refs.snackbar.showNotification('Give right amount.'); return;}
+				console.log(this.expence)
+				this.$emit('onClickConfirm', this.expence);
 			},
 			closeDialog(){
+				this.loading = false,
 				this.expence.title = '';
 				this.expence.expence = '';
 				this.expence.description = '';
 				this.$emit('onClose');
 			},
-			snackAlert(text){
-				this.text = text;
-				this.snackbar = true;
-			}
 		}
 	}
 </script>
