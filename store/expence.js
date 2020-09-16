@@ -20,8 +20,8 @@ export const actions = {
 	async ACT_STORE({commit}, payload) {
 
     return new Promise((resolve, reject) => {
-      let date = new Date();
-      payload.time = date.toLocaleDateString();
+      //let date = new Date();
+      //payload.time = date.toLocaleDateString();
   	 	firebase.database().ref('expences').push(payload)
   	 	.then((data) => {
   	 		console.log(data);
@@ -76,8 +76,7 @@ export const actions = {
 
 
     async ACT_UPDATE({commit}, payload) {
-
-    return new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
       
       //firebase.database().ref('expences').push(payload)
       firebase.database().ref('expences').child(payload.id).update(payload)

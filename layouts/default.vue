@@ -127,7 +127,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Batayon'
+      title: 'নিবিলাস'
     }
   },//end of data
   methods: {

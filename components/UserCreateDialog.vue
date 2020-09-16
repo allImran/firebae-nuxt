@@ -89,10 +89,11 @@
 		}, //end of data
 		methods: {
 			store(){
-				if(this.user.name.trim() == ''){this.$refs.snackbar.showNotification('Write a name first.'); return;}
+				this.loading = true;
+				if(this.user.name.trim() == ''){this.showNotification('Write a name first.'); return;}
 				console.log(this.user.mobile.length)
-				if(!Number.isInteger(parseInt(this.user.mobile)) || this.user.mobile.length < 6){this.$refs.snackbar.showNotification('Give right number.'); return;}
-				if(this.user.address.trim() == ''){this.$refs.snackbar.showNotification('Write address.'); return;}
+				if(!Number.isInteger(parseInt(this.user.mobile)) || this.user.mobile.length < 6){this.showNotification('Give right number.'); return;}
+				if(this.user.address.trim() == ''){this.showNotification('Write address.'); return;}
 				this.$emit('onClickConfirm', this.user);
 				//console.log(this.user.image.name)
 			},
@@ -108,6 +109,10 @@
 					this.imageUrl = '';
 					this.user.image = null;
 				}
+			},
+			showNotification(message){
+				this.$refs.snackbar.showNotification(message);
+				this.loading = false;
 			},
 			closeDialog(){
 				this.imageUrl = '';

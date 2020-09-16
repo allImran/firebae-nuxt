@@ -109,5 +109,27 @@ export const actions = {
         });
       });
       });
-    }
+    },
+    
+    async ACT_UPDATE({commit}, payload) {
+      return new Promise((resolve, reject) => {
+      
+      //firebase.database().ref('expences').push(payload)
+      firebase.database().ref('users').child(payload.id).update(payload)
+      .then((data) => {
+        console.log(data);
+        resolve({
+          success: true
+        });
+      })
+      .catch((error)=> {
+        console.log(error)
+        resolve({
+          success: false
+        });
+      })
+    });
+  },
+
+
 }

@@ -46,7 +46,7 @@
 			  >
 			  	<template v-slot:item.time="{ item }">
 			  		<div class="d-flex justify-space-between">
-			  			{{ item.time }}
+			  			{{ item.time | fomrmateTime }}
 			  			<v-btn 
 			  				icon 
 			  				x-small
@@ -132,6 +132,12 @@ import Snackbar from '@/components/Snackbar'
     			total = total + parseFloat(i.expence);
     		})
     		return total;
+    	}
+    },
+    filters: {
+    	fomrmateTime(time){
+    		let date = new Date(time).toDateString().split(' ');
+    		return date[2] + '-' + date[1] + '-' + date[3]
     	}
     },
     methods: {

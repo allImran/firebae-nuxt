@@ -19,6 +19,14 @@
 			            dense
 			            outlined
 			          ></v-text-field>
+			          <div class="d-flex justify-center align-center mb-5 mt-2">
+				           <v-date-picker
+				           	full-width 
+				           	v-model="expence.time"
+				           	color="green lighten-1"
+				         	>
+				           	</v-date-picker>
+			          </div>
 			          <v-textarea
 			          	v-model="expence.description"
 			            label="Description"

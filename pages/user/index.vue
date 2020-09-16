@@ -58,7 +58,7 @@
 						      <v-icon dark>mdi-pencil</v-icon>
 						    </v-btn>
 
-						    <a class="fb-link" href="" target="_blank"><v-icon dark>mdi-facebook</v-icon></a>
+						    <a class="fb-link" :href="item.fbId" target="_blank"><v-icon dark>mdi-facebook</v-icon></a>
 			  			</div>
 			  			
 			  		</div>
@@ -84,8 +84,8 @@
 	      width="375px"
 	    >
 	      <EditDialog
-	      	ref="editExp"
-	      	:expence="editItem"
+	      	ref="editUser"
+	      	:user="editItem"
 	      	@onClickConfirm="saveEditedItem"
 	      	@onClose="toggleEditDialog()"
 	      />
@@ -137,7 +137,8 @@ import Snackbar from '@/components/Snackbar'
     methods: {
     	...mapActions({
 	      storeUser: 'user/ACT_STORE',
-	      fetchUserList: 'user/ACT_USER'
+	      fetchUserList: 'user/ACT_USER',
+	      updateUser: 'user/ACT_UPDATE'
 	    }),
     	toggleDialog(){
     		this.dialog = !this.dialog
@@ -167,9 +168,17 @@ import Snackbar from '@/components/Snackbar'
     		this.toggleEditDialog();
     		this.editItem = Object.assign({},item);
     	},
-    	saveEditedItem(item){
-    		console.log(item, "edited item")
-    		//	alert('you are about to save this edited data')
+    	async saveEditedItem(item){
+    		//console.log(item, "edited item on index page")
+    		let response = await this.updateUser(item)
+    		if(!response.success){
+    			let message = 'Login and try again';
+    			this.$refs.snackbar.showNotification(message);
+    		}else{
+    			let message = 'Changes has done successfully';
+    			this.$refs.snackbar.showNotification(message);
+    			this.$refs.editUser.closeDialog();
+    		}
     	}
     },
 
