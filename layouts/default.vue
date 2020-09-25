@@ -51,7 +51,7 @@
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-btn
-      v-if="loggedIn"
+      
         @click="logout"
       >
         <v-icon>mdi-logout</v-icon>
@@ -95,15 +95,19 @@
   import * as firebase from 'firebase/app'
   import 'firebase/auth'
   import { mapMutations, mapState } from 'vuex'
-export default {
-  //middleware: 'authenticated',
+  export default {
+  middleware: 'authenticated',
   name: 'default-layout',
   computed: {
-    
     loggedIn(){
-      return this.$store.state.user == null ? false : true
+      if(process.browser){
+          //localStorage.setItem("authToken", token);
+          let userId = localStorage.getItem('UID')
+          return userId === null ? false : true
+      }
     },
     ...mapState({
+
     }),
    
   },
@@ -132,16 +136,18 @@ export default {
   },//end of data
   methods: {
     ...mapMutations({
+        removeUser: 'REMOVE_USER',
         setUser: 'SET_USER'
       }),
     logout() {
       firebase.auth().signOut();
-      this.setUser(null)
+      this.removeUser();
       this.$router.push('/login')
     },
     goBack(){
       this.$router.back();
     }
-  }
+  },
+  
 }
 </script>

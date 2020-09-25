@@ -116,7 +116,7 @@
     }, //end of data
     methods: {
       ...mapMutations({
-        setUser: 'SET_USER'
+        setUser: 'SET_USER_TO_LOCAL'
       }),
       login(){
         this.loading = true;

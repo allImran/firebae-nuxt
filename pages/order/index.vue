@@ -2,12 +2,11 @@
 	<v-row>
 		<v-col class="mx-auto mt-12" cols="12" md="4" xl="4">
 			<v-card
-		    	class="mx-auto pa-5"
+		    	class="mx-auto pa-5 custome"
 		    	max-width="100%"
-		    	height="100%"
 		  	>
 		    <div class="d-flex">
-		    	<v-card-title class="pt-0">Usre List</v-card-title>
+		    	<v-card-title class="pt-0">Order List</v-card-title>
 		    	<v-spacer></v-spacer>
 		    	<v-btn @click="toggleDialog()"> 
 		    		<v-icon>mdi-plus</v-icon>Create
@@ -30,7 +29,7 @@
 			      <v-avatar left>
 			        <v-icon>mdi-account</v-icon>
 			      </v-avatar>
-			      <p class="mt-5">{{ totalUser }}</p>
+			      <!-- <p class="mt-5">{{ totalUser }}</p> -->
 			    </v-chip>
 		    </div>
 		     
@@ -38,30 +37,28 @@
 		    <template>
 			  <v-data-table
 			    :headers="headers"
-			    :items="users"
+			    :items="orders"
 			    :search="search"
 			    single-expand
-			    :loading="$store.state.user.loading"
+			    :loading="$store.state.order.loading"
 			    :items-per-page="5"
 			    class="elevation-1"
 			  >
-			  	<template v-slot:item.mobile="{ item }">
-			  		<div class="d-flex justify-space-between">
-			  			{{ item.mobile }}
-			  			<div>
-			  				<v-btn 
-				  				icon 
-				  				x-small
-				  				@click="openEditModal(item)"
-				  				color="primary"
-				  			>
-						      <v-icon dark>mdi-pencil</v-icon>
-						    </v-btn>
-
-						    <a class="fb-link" :href="item.fbId" target="_blank"><v-icon dark>mdi-facebook</v-icon></a>
-			  			</div>
-			  			
-			  		</div>
+			  	
+			    <template v-slot:item.actions="{ item }">
+			      <v-icon
+			        small
+			        class="mr-2"
+			        @click="openEditModal(item)"
+			      >
+			        mdi-pencil
+			      </v-icon>
+			      <v-icon
+			        small
+			      	@click="$router.push({path: `/order/${item.id}`})"
+			      >
+			        mdi-eye
+			      </v-icon>
 			    </template>
 
 			  </v-data-table>
@@ -74,7 +71,7 @@
 	      width="375px"
 	    >
 	      <CreateDialog
-	      	ref="createExp"
+	      	ref="orderExp"
 	      	@onClickConfirm="store"
 	      	@onClose="toggleDialog()"
 	      />
@@ -84,8 +81,8 @@
 	      width="375px"
 	    >
 	      <EditDialog
-	      	ref="editUser"
-	      	:user="editItem"
+	      	ref="editOrder"
+	      	:order="editItem"
 	      	@onClickConfirm="saveEditedItem"
 	      	@onClose="toggleEditDialog()"
 	      />
@@ -98,8 +95,8 @@
 </template>
 
 <script>
-import CreateDialog from '@/components/UserCreateDialog'
-import EditDialog from '@/components/UserEditDialog'
+import CreateDialog from '@/components/OrderCreateDialog'
+import EditDialog from '@/components/OrderEditDialog'
 import Snackbar from '@/components/Snackbar'
 import { mapActions, mapState } from 'vuex'
 
@@ -117,28 +114,28 @@ import { mapActions, mapState } from 'vuex'
     		editItem: '',
     		headers: [
 	          {
-	            text: 'Name',
+	            text: 'Title',
 	            align: 'start',
-	            value: 'name',
+	            value: 'title',
 	          },
-	          { text: 'Mobile', value: 'mobile' },
-	          
+	          { text: 'Customer', value: 'userName' },
+	          { text: 'Actions', value: 'actions', sortable: false },
 	        ],
     	}
     }, //end of data
     computed: {
     	...mapState({
-    		users: state => state.user.users
+    		orders: state => state.order.orders,
     	}),
     	totalUser(){
-    		//return this.users.length;
+    		return this.users.length;
     	}
     },
     methods: {
     	...mapActions({
-	      storeUser: 'user/ACT_STORE',
-	      getuserList: 'user/ACT_USER',
-	      updateUser: 'user/ACT_UPDATE'
+	      storeOrder: 'order/ACT_STORE',
+	      getOrderList: 'order/ACT_ORDER',
+	      updateOrder: 'order/ACT_UPDATE'
 	    }),
     	toggleDialog(){
     		this.dialog = !this.dialog
@@ -147,18 +144,19 @@ import { mapActions, mapState } from 'vuex'
     		this.editdialog = !this.editdialog
     	},
     	async store(data){
-    		let response = await this.storeUser(data);
+    		console.log(data)
+    		let response = await this.storeOrder(data);
     		if(!response.success){
     			let message = 'Login and try again';
     			this.$refs.snackbar.showNotification(message);
     		}else{
-    			let message = 'User added successfully...';
+    			let message = 'Order added successfully...';
     			this.$refs.snackbar.showNotification(message);
-    			this.$refs.createExp.closeDialog();
+    			this.$refs.orderExp.closeDialog();
     		}
     	},
-    	async fetchUserList(){
-    		let response = await this.getuserList();
+    	async fetchOrderList(){
+    		let response = await this.getOrderList()
     		if(!response.success){
     			let message = 'Login again';
     			this.$refs.snackbar.showNotification(message);
@@ -170,20 +168,20 @@ import { mapActions, mapState } from 'vuex'
     	},
     	async saveEditedItem(item){
     		//console.log(item, "edited item on index page")
-    		let response = await this.updateUser(item)
+    		let response = await this.updateOrder(item)
     		if(!response.success){
     			let message = 'Login and try again';
     			this.$refs.snackbar.showNotification(message);
     		}else{
     			let message = 'Changes has done successfully';
     			this.$refs.snackbar.showNotification(message);
-    			this.$refs.editUser.closeDialog();
+    			this.$refs.editOrder.closeDialog();
     		}
     	}
     },
 
     mounted(){
-    	this.fetchUserList();
+    	this.fetchOrderList();
     }
     
   }
@@ -206,5 +204,7 @@ import { mapActions, mapState } from 'vuex'
 			color: #3f51b5;
 		}
 	}
-
+	.custome{
+		min-height: 100%;
+	}
 </style>

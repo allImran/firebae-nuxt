@@ -30,11 +30,20 @@
     	return {
     		menuItems: [
     			{name: 'User', icon: 'mdi-account', link: '/user'},
-    			{name: 'Order', icon: 'mdi-cart-arrow-down', link: '#'},
+    			{name: 'Order', icon: 'mdi-cart-arrow-down', link: '/order'},
     			{name: 'Expence', icon: 'mdi-currency-bdt', link: '/expence'}
     		]
     	}
     }, //end of data
+    created(){
+    	if(process.browser){
+          //localStorage.setItem("authToken", token);
+          let userId = localStorage.getItem('UID')
+          if(userId == null){
+          	this.$router.push('/login')
+          }
+      }
+    }
     
   }
 </script>
