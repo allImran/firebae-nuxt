@@ -32,6 +32,11 @@ export default {
   */
   css: [
   ],
+
+  script: [{
+    src: "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js",
+  }
+  ],
   /*
   ** Plugins to load before mounting the App
   ** https://nuxtjs.org/guide/plugins

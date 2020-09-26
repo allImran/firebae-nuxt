@@ -27,9 +27,9 @@
 			      text-color="white"
 			    >
 			      <v-avatar left>
-			        <v-icon>mdi-account</v-icon>
+			        <v-icon>mdi-currency-bdt</v-icon>
 			      </v-avatar>
-			      <!-- <p class="mt-5">{{ totalUser }}</p> -->
+			      <p class="mt-5">{{ total }}</p>
 			    </v-chip>
 		    </div>
 		     
@@ -101,7 +101,7 @@ import Snackbar from '@/components/Snackbar'
 import { mapActions, mapState } from 'vuex'
 
   export default {
-    name: 'index',
+    name: 'order-index',
     components: {CreateDialog, EditDialog},
   //   async fetch({ store, route }) {
 	 //    await store.dispatch("expence/ACT_EXPENCE");
@@ -127,8 +127,12 @@ import { mapActions, mapState } from 'vuex'
     	...mapState({
     		orders: state => state.order.orders,
     	}),
-    	totalUser(){
-    		return this.users.length;
+    	total(){
+    		let total = 0;
+    		this.orders.map(i => {
+    			total = total + parseFloat(i.paid);
+    		})
+    		return total;
     	}
     },
     methods: {

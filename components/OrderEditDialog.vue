@@ -18,7 +18,6 @@
 			            item-text="name"
 			            item-value="id"
 			            outlined
-			            @focus="fetchUserList"
 			            @change="setuserName"
 			            dense
 			            :loading="$store.state.user.loading"
@@ -170,9 +169,8 @@
 				this.$emit('onClose');
 			},
 		}, //end of methods
-		// created(){
-		// 	let time = new Date().toISOString().split('T')[0];
-		// 	this.order.date = this.order.deadLine = time;
-		// }
+		created(){
+			this.fetchUserList();
+		}
 	}
 </script>

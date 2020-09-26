@@ -6,12 +6,13 @@
 	        </v-card-title>
 	        	<v-form>
 			    	<v-col cols="12" sm="12" md="12">
-			          <v-text-field
+			          <v-select
 			          	v-model="expence.title"
-			            label="Title"
+			            placeholder="Title"
+			            :items="names"
 			            dense
 			            outlined
-			          ></v-text-field>
+			          ></v-select>
 			          <v-text-field
 			          	v-model="expence.expence"
 			          	type="number"
@@ -56,11 +57,13 @@
 
 <script>
 	import Snackbar from '@/components/Snackbar'
+	import expName from './expName'
 	export default{
 		name: 'expence-create-dialog',
 		data () {
 			return {
 				text: '',
+				names: expName,
 				snackbar: false,
 				loading: false,
 				expence: {
