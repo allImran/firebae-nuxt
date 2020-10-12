@@ -130,7 +130,7 @@ import { mapActions, mapState } from 'vuex'
     	total(){
     		let total = 0;
     		this.orders.map(i => {
-    			total = total + parseFloat(i.paid);
+    			total = total + (parseFloat(i.paid) - parseFloat(i.loss));
     		})
     		return total;
     	}

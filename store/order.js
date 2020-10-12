@@ -61,6 +61,7 @@ export const actions = {
               title: rawData[key].title,
               userName: rawData[key].userName,
               userId: rawData[key].userId,
+              loss: rawData[key].loss,
               amount: rawData[key].amount,
               paid: rawData[key].paid,
               date: rawData[key].date,

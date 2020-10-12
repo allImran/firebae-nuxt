@@ -43,6 +43,7 @@
         <v-icon>mdi-application</v-icon>
       </v-btn> -->
       <v-btn
+        v-if="!isHomePage"
         icon
         @click.stop= "goBack"
       >
@@ -86,7 +87,15 @@
       :absolute="!fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <div style="width: 100%" class="d-flex justify-space-between align-center">
+        <span>&copy; {{ new Date().getFullYear() }}</span>
+
+        <div class="mr-5">
+          <SpeedDial 
+            v-if="!isHomePage"
+          />
+        </div>
+      </div>
     </v-footer>
   </v-app>
 </template>
@@ -95,9 +104,11 @@
   import * as firebase from 'firebase/app'
   import 'firebase/auth'
   import { mapMutations, mapState } from 'vuex'
+  import SpeedDial from '@/components/SpeedDial'
   export default {
   middleware: 'authenticated',
   name: 'default-layout',
+  components: {SpeedDial},
   computed: {
     loggedIn(){
       if(process.browser){
@@ -109,7 +120,9 @@
     ...mapState({
 
     }),
-   
+   isHomePage() {
+    return (this.$route.path == '/') ? true : false;
+   }
   },
   data () {
     return {

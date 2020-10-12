@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[5],{384:function(n,w,o){"use strict";o.r(w),w.default=["দড়ি","যাতায়াত","ব্যাগ","চেন","কেচিঁ ধার","পুথি","বিল","অন্যান্য"]}}]);

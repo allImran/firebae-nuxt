@@ -59,7 +59,7 @@
 					  	<v-list-item>
 					      <v-list-item-avatar color="grey"></v-list-item-avatar>
 					      <v-list-item-content>
-					        <v-list-item-title class="headline">{{ user.name }}</v-list-item-title>
+					        <v-list-item-title class="headline-2">{{ user.name }}</v-list-item-title>
 					      </v-list-item-content>
 					    </v-list-item>
 					     <v-list-item>
@@ -76,13 +76,25 @@
 					          <v-icon>mdi-home</v-icon>
 					        </v-list-item-icon>
 					        <v-list-item-content>
-					            <v-list-item-title>{{ user.address }}</v-list-item-title>
+					            
+					            	<span>{{ user.address }}</span>
+					        	
 					        </v-list-item-content>
 					     </v-list-item>
 				  	</div>
 				  </div>
 				  <v-divider></v-divider>
-				  <p class="mt-2 detail pa-3"><strong>Order Detail: </strong>{{ order.detail }}</p>
+				  <p 
+				  	class="mt-2 detail pa-3"
+				  >
+				  		<strong>Order Detail: </strong>
+				  		{{ order.detail }}
+				  	</p>
+				  	<SimpleTable :data="{
+				  		'price': order.amount,
+				  		'paid': order.paid,
+				  		'loss': order.loss
+				  	}" />
 				</div>
 			</v-card>
 		</v-col>
@@ -95,6 +107,7 @@
 <script>
 	import { mapActions, mapState } from 'vuex'
 	import Snackbar from '@/components/Snackbar'
+	import SimpleTable from '@/components/SimpleTable'
 	import {diffBetweenDate} from '@/service/transform'
 
 	export default {
@@ -104,6 +117,7 @@
 
 			}
 		},
+		components: {SimpleTable},
 		computed: {
 			orderId() {
 				return this.$route.params.id
@@ -186,5 +200,9 @@
 	}
 	.detail{
 		color: #009688;
+	}
+	.headline-2{
+		font-size: 17px;
+		font-weight: 600;
 	}
 </style>
