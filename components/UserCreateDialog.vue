@@ -98,6 +98,7 @@
 				//console.log(this.user.image.name)
 			},
 			onFilePicked(event){
+				console.log(event, 'event')
 				if(event !== undefined){
 					const fileReader = new FileReader();
 					fileReader.addEventListener('load', () => {

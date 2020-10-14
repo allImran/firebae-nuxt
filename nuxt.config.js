@@ -42,7 +42,8 @@ export default {
   ** https://nuxtjs.org/guide/plugins
   */
   plugins: [
-    '~/plugins/firebase.js'
+    { src: '~/plugins/firebase.js'},
+    { src: '~/plugins/imageUpload.js', ssr: false}
   ],
   /*
   ** Auto import components

@@ -12,9 +12,9 @@
       <template v-slot:activator>
         <v-btn
           v-model="fab"
-          color="#212121"
+          color="#fff"
           dark
-          fab
+          icon
         >
           <v-icon v-if="fab">
             mdi-close

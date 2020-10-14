@@ -30,6 +30,7 @@
     	return {
     		menuItems: [
     			{name: 'User', icon: 'mdi-account', link: '/user'},
+    			{name: 'Product', icon: 'mdi-shopping', link: '/product'},
     			{name: 'Order', icon: 'mdi-cart-arrow-down', link: '/order'},
     			{name: 'Expence', icon: 'mdi-currency-bdt', link: '/expence'},
     			{name: 'Statistics', icon: 'mdi-chart-bell-curve-cumulative', link: '/chart'}

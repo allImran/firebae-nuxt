@@ -90,7 +90,7 @@
       <div style="width: 100%" class="d-flex justify-space-between align-center">
         <span>&copy; {{ new Date().getFullYear() }}</span>
 
-        <div class="mr-5">
+        <div class="sp-dial mr-5">
           <SpeedDial 
             v-if="!isHomePage"
           />
@@ -164,3 +164,15 @@
   
 }
 </script>
+
+<style lang="scss">
+  .sp-dial{
+    position: absolute;
+    right: 10px;
+    top: 17px;
+    opacity: .5;
+    &:hover{
+      opacity: 1;
+    }
+  }
+</style>
