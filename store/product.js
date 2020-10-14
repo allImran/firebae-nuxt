@@ -3,7 +3,7 @@ import 'firebase/database';
 import 'firebase/storage';
 export const state = () => ({
   products: [],
-  product: null,
+  product: {image: ''},
   loading: false
 })
 

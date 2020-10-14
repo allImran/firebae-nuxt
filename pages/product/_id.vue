@@ -1,19 +1,51 @@
 <template>
-	<v-row>
+	<v-row class="product-detail">
 		<v-col class="mx-auto mt-12" cols="12" md="4" xl="4">
 			<v-card
-				style="padding-bottom: 100px;"
-			    class="mx-auto"
-			    dark
-			    :loading="$store.state.order.loading"
-			    max-width="400"
-			    min-height="100%"
+			    :loading="$store.state.product.loading"
+			    class="mx-auto pb-8"
+			    height="100%"
 			  >
-			  <h3 class="text-center" v-if="$store.state.product.loading">loading........</h3>
-			  <div v-else class="content">
-				  <h1>product</h1>
-			  </div>
-			</v-card>
+			    <template slot="progress">
+			      <v-progress-linear
+			        color="deep-purple"
+			        height="10"
+			        indeterminate
+			      ></v-progress-linear>
+			    </template>
+
+				    <v-img
+				      height="290"
+				      :src="`https://firebasestorage.googleapis.com/v0/b/batayon-1.appspot.com/o/${imageName}?alt=media`"
+				    >
+				    	<v-card-title>{{product.name}}</v-card-title>
+				    </v-img>
+
+				    <div class="d-flex justify-center align-center mt-10 mb-5">
+				    	<span class="display-3 mr-3 price">{{ product.price}} <sup>tk</sup></span>
+				    	<v-divider
+						  vertical
+						></v-divider>
+				    	<span class="ml-3">Total sale: 43</span>
+				    </div>
+
+			    	<v-card-title>Details</v-card-title>
+				      
+					<v-card-text>
+				      <div>{{ product.detail }}</div>
+				    </v-card-text>
+
+			    <!-- <v-card-actions>
+			      <v-btn
+			        color="deep-purple lighten-2"
+			        text
+			        @click="reserve"
+			      >
+			        Reserve
+			      </v-btn>
+			    </v-card-actions> -->
+			  </v-card>
+			
 		</v-col>
 		<Snackbar
 	    	ref="snackbar"
@@ -34,13 +66,15 @@
 		},
 		components: {},
 		computed: {
-			productId() {
-				return this.$route.params.id
-			},
-			
 			...mapState({
 	    		product: state => state.product.product,
 	    	}),
+			productId() {
+				return this.$route.params.id
+			},
+			imageName(){
+				return this.product.image.replace('/', '%2F')
+			},
 		},
 		methods: {
 			...mapActions({
@@ -57,43 +91,19 @@
 	    	
 		},//end of methods
 		
-		mounted(){
+		created(){
 	    	this.fetchProduct();
 	    }
 	}
 </script>
 
 <style lang="scss">
-	.date{
-		h1, span{
-			color:#009688 ;
+	.product-detail{
+		.v-card__title{
+			background-color: #13111121;
 		}
-		.d-remain{
-			border: 1px solid #009688;
-		    border-radius: 50%;
-		    padding: 15px;
-		}
-	}
-	.payment-status{
-		h2{
+		.price{ 
 			color: #009688;
 		}
-	}
-	.user{
-		.user-avatar{
-			color: #009688;
-			font-size: 90px;
-		}
-	}
-	.percent-text{
-		color: #009688;
-		font-size: 14px;
-	}
-	.detail{
-		color: #009688;
-	}
-	.headline-2{
-		font-size: 17px;
-		font-weight: 600;
 	}
 </style>

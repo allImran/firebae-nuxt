@@ -171,6 +171,7 @@
     right: 10px;
     top: 17px;
     opacity: .5;
+    height: 0;
     &:hover{
       opacity: 1;
     }
