@@ -27,16 +27,16 @@ export const actions = {
   	 		console.log(data);
         resolve({
           success: true
-        });
-  	 	})
-  	 	.catch((error)=> {
-    		console.log(error)
-        resolve({
-          success: false
-        });
-    	})
-    });
-  },
+          });
+    	 	})
+    	 	.catch((error)=> {
+      		console.log(error)
+          resolve({
+            success: false
+          });
+      	})
+      });
+    },
 
     async ACT_EXPENCE({commit}){
       commit('SET_LOADING', true)
